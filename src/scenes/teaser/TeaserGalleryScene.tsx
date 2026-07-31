@@ -62,22 +62,34 @@ export function TeaserGalleryScene({ isActive }: SceneComponentProps) {
       </motion.div>
 
       <div
-        className="relative z-10 flex w-full flex-1 items-center justify-center"
-        style={{ minHeight: 'clamp(400px, 65vh, 700px)' }}
+        className="relative z-10 w-full flex-1"
+        style={{ height: 'clamp(400px, 65vh, 700px)' }}
       >
-        <Suspense fallback={null}>
-          <DomeGallery
-            images={domeImages}
-            fit={0.8}
-            fitBasis="auto"
-            minRadius={600}
-            segments={34}
-            dragDampening={2}
-            maxVerticalRotationDeg={0}
-            grayscale={false}
-            overlayBlurColor="#120F17"
-          />
-        </Suspense>
+        {teaserImages.length > 0 ? (
+          <Suspense fallback={null}>
+            <DomeGallery
+              images={domeImages}
+              fit={0.8}
+              fitBasis="auto"
+              minRadius={600}
+              segments={34}
+              dragDampening={2}
+              maxVerticalRotationDeg={0}
+              grayscale={false}
+              overlayBlurColor="#120F17"
+            />
+          </Suspense>
+        ) : (
+          <motion.div
+            className="flex flex-col items-center gap-3 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: navigating ? 0 : 1 }}
+            transition={{ duration: 1, ease: EASE }}
+          >
+            <div className="h-12 w-12 rounded-full border-2 border-gold-300/20 border-t-gold-300/60 animate-spin" />
+            <p className="font-body text-sm text-void-300">Teaser photos coming soon</p>
+          </motion.div>
+        )}
       </div>
 
       <AnimatePresence>
