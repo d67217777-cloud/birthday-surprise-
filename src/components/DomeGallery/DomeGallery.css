@@ -87,8 +87,9 @@ main.sphere-main {
 .item__image {
   position: absolute;
   display: block;
-  inset: 10px;
-  border-radius: var(--tile-radius, 12px);
+  /* FIXED: Reduced inset from 10px/18px down to 2px so image tightly covers the box */
+  inset: 2px;
+  border-radius: var(--tile-radius, 20px);
   background: transparent;
   overflow: hidden;
   backface-visibility: hidden;
