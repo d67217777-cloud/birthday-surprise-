@@ -4,8 +4,8 @@
   height: 100%;
   --radius: 520px;
   --viewer-pad: 72px;
-  /* FIXED: Reverted the *2 multiplier to restore the large gaps between tiles (Screenshot 1 look) */
-  --circ: calc(var(--radius) * 3.14);
+  /* PERFECT SCALE: Pura 360 circle math taki globe screen par bada aur clear dikhe */
+  --circ: calc(var(--radius) * 2 * 3.14159);
   --rot-y: calc((360deg / var(--segments-x)) / 2);
   --rot-x: calc((360deg / var(--segments-y)) / 2);
   --item-width: calc(var(--circ) / var(--segments-x));
@@ -88,9 +88,9 @@ main.sphere-main {
 .item__image {
   position: absolute;
   display: block;
-  /* FIXED: Set inset to 5px to keep images large inside the tile without overlapping */
-  inset: 5px; 
-  border-radius: var(--tile-radius, 32px);
+  /* PERFECT GAPS: Bade tiles ke andar 18px ka margin jo bilkul Screenshot 1 jaisa khali space dega */
+  inset: 18px; 
+  border-radius: var(--tile-radius, 12px);
   background: transparent;
   overflow: hidden;
   backface-visibility: hidden;
@@ -197,4 +197,5 @@ main.sphere-main {
 
 .edge-fade--bottom {
   bottom: 0;
-}
+                               }
+  
