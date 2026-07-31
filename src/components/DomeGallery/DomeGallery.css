@@ -4,6 +4,7 @@
   height: 100%;
   --radius: 520px;
   --viewer-pad: 72px;
+  /* FIXED: Reverted the *2 multiplier to restore the large gaps between tiles (Screenshot 1 look) */
   --circ: calc(var(--radius) * 3.14);
   --rot-y: calc((360deg / var(--segments-x)) / 2);
   --rot-x: calc((360deg / var(--segments-y)) / 2);
@@ -87,8 +88,9 @@ main.sphere-main {
 .item__image {
   position: absolute;
   display: block;
-  inset: 10px;
-  border-radius: var(--tile-radius, 12px);
+  /* FIXED: Set inset to 5px to keep images large inside the tile without overlapping */
+  inset: 5px; 
+  border-radius: var(--tile-radius, 32px);
   background: transparent;
   overflow: hidden;
   backface-visibility: hidden;
