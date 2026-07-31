@@ -267,7 +267,7 @@ export default function DomeGallery({
     },
     [dragDampening, maxVerticalRotationDeg, stopInertia]
   );
-        useGesture(
+    useGesture(
     {
       onDragStart: ({ event }) => {
         if (focusedElRef.current) return;
@@ -566,13 +566,13 @@ export default function DomeGallery({
       ref={rootRef}
       className="sphere-root"
       style={{
-        ['--segments-x']: String(segments), 
-        ['--segments-y']: String(segments), 
+        ['--segments-x']: String(segments),
+        ['--segments-y']: String(segments),
         ['--overlay-blur-color']: overlayBlurColor,
         ['--tile-radius']: imageBorderRadius,
         ['--enlarge-radius']: openedImageBorderRadius,
         ['--image-filter']: grayscale ? 'grayscale(1)' : 'none',
-        minHeight: '100dvh' 
+        minHeight: '100dvh'
       }}
     >
       <main ref={mainRef} className="sphere-main">
@@ -588,10 +588,10 @@ export default function DomeGallery({
                 data-size-x={it.sizeX}
                 data-size-y={it.sizeY}
                 style={{
-                  ['--offset-x']: String(it.x),       
-                  ['--offset-y']: String(it.y),       
-                  ['--item-size-x']: String(it.sizeX), 
-                  ['--item-size-y']: String(it.sizeY)  
+                  ['--offset-x']: String(it.x),
+                  ['--offset-y']: String(it.y),
+                  ['--item-size-x']: String(it.sizeX),
+                  ['--item-size-y']: String(it.sizeY)
                 }}
               >
                 <div
@@ -601,6 +601,7 @@ export default function DomeGallery({
                   aria-label={it.alt || 'Open image'}
                   onClick={onTileClick}
                   onPointerUp={onTilePointerUp}
+                  style={{ background: 'transparent' }} // FIXED: Removed dark background box completely
                 >
                   <img
                     src={it.src}
@@ -608,9 +609,8 @@ export default function DomeGallery({
                     alt={it.alt}
                     onError={(e) => {
                       const target = e.currentTarget;
-                      console.error(`[DomeGallery] Failed to load image at: ${target.src}. Check Vite public path.`);
                       target.style.display = 'none';
-                      target.parentElement.style.background = 'rgba(26, 24, 40, 0.5)';
+                      // FIXED: Removed the black box creation on error
                     }}
                   />
                 </div>
