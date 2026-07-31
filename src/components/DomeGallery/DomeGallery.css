@@ -67,16 +67,15 @@ main.sphere-main {
   backdrop-filter: blur(3px);
 }
 
+/* FIXED: Cleaned up the insane -999px margins and forced container to be 100% transparent */
 .item {
-  /* FIXED: Reduced the box scale to tightly wrap the image */
-  width: calc(var(--item-width) * (var(--item-size-x) * 0.55));
-  height: calc(var(--item-height) * (var(--item-size-y) * 0.85));
+  width: calc(var(--item-width) * var(--item-size-x));
+  height: calc(var(--item-height) * var(--item-size-y));
   position: absolute;
-  top: -999px;
-  bottom: -999px;
-  left: -999px;
-  right: -999px;
+  inset: 0;
   margin: auto;
+  background: transparent !important;
+  box-shadow: none !important;
   transform-origin: 50% 50%;
   backface-visibility: hidden;
   transition: transform 300ms;
@@ -85,12 +84,14 @@ main.sphere-main {
     translateZ(var(--radius));
 }
 
+/* FIXED: Set image to fit tightly with transparent background */
 .item__image {
   position: absolute;
   display: block;
   inset: 0;
-  border-radius: var(--tile-radius, 28px);
-  background: transparent;
+  border-radius: var(--tile-radius, 35px);
+  background: transparent !important;
+  box-shadow: none !important;
   overflow: hidden;
   backface-visibility: hidden;
   transition: transform 300ms;
@@ -196,4 +197,4 @@ main.sphere-main {
 
 .edge-fade--bottom {
   bottom: 0;
-}
+  }
