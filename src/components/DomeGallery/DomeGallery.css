@@ -4,8 +4,7 @@
   height: 100%;
   --radius: 520px;
   --viewer-pad: 72px;
-  /* FIXED: Added * 2 to calculate the true geometric circumference (2 * pi * r) */
-  --circ: calc(var(--radius) * 2 * 3.14159265);
+  --circ: calc(var(--radius) * 3.14);
   --rot-y: calc((360deg / var(--segments-x)) / 2);
   --rot-x: calc((360deg / var(--segments-y)) / 2);
   --item-width: calc(var(--circ) / var(--segments-x));
@@ -88,9 +87,7 @@ main.sphere-main {
 .item__image {
   position: absolute;
   display: block;
-  /* FIXED: Replaced hardcoded 10px with 5%. 
-     This ensures the image always dynamically occupies exactly 90% of its tile space. */
-  inset: 5%; 
+  inset: 10px;
   border-radius: var(--tile-radius, 12px);
   background: transparent;
   overflow: hidden;
