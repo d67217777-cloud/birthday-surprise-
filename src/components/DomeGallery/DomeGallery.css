@@ -4,8 +4,7 @@
   height: 100%;
   --radius: 520px;
   --viewer-pad: 72px;
-  /* PERFECT SCALE: 4.8 multiplier gives the exact visual globe size from your 1st screenshot */
-  --circ: calc(var(--radius) * 4.8);
+  --circ: calc(var(--radius) * 3.14);
   --rot-y: calc((360deg / var(--segments-x)) / 2);
   --rot-x: calc((360deg / var(--segments-y)) / 2);
   --item-width: calc(var(--circ) / var(--segments-x));
@@ -88,12 +87,8 @@ main.sphere-main {
 .item__image {
   position: absolute;
   display: block;
-  /* RESPONSIVE GAPS & SHAPE: Using percentages creates the exact portrait pill-shape and gaps on ALL phone screens */
-  top: 3%;
-  bottom: 3%;
-  left: 15%;
-  right: 15%;
-  border-radius: var(--tile-radius, 35px);
+  inset: 10px;
+  border-radius: var(--tile-radius, 12px);
   background: transparent;
   overflow: hidden;
   backface-visibility: hidden;
