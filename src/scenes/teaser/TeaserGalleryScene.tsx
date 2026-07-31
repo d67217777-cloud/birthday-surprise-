@@ -68,16 +68,17 @@ export function TeaserGalleryScene({ isActive }: SceneComponentProps) {
         {teaserImages.length > 0 ? (
           <Suspense fallback={null}>
             <DomeGallery
-              images={domeImages}
-              fit={0.8}
-              fitBasis="auto"
-              minRadius={600}
-              segments={34}
-              dragDampening={2}
-              maxVerticalRotationDeg={0}
-              grayscale={false}
-              overlayBlurColor="#120F17"
-            />
+  images={domeImages}
+  fit={0.45}
+  fitBasis="min"
+  minRadius={180}
+  maxRadius={320}
+  segments={20}
+  dragDampening={1.2}
+  maxVerticalRotationDeg={12}
+  grayscale={false}
+  overlayBlurColor="#120F17"
+/>
           </Suspense>
         ) : (
           <motion.div
