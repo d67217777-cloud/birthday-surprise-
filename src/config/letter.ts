@@ -1,6 +1,6 @@
 export const letterContent = {
   greeting: 'Dear Kumkum,',
-  birthdayLine: 'Happy Birthday Kumkum 💗',
+  birthdayLine: 'Happy Birthday ❤️',
   paragraphs: [
     'Today is not just another day on the calendar. It is the day the world was blessed with someone truly special. I wanted this birthday to be remembered in a different way, so instead of sending only a simple message, I decided to create this entire journey just for you.',
     'Every screen you have visited, every animation you have seen, every transition, every glow, and every tiny detail was prepared with care. This website is more than code — it is a collection of thoughts, memories, appreciation, and heartfelt wishes made especially for you.',
@@ -14,5 +14,5 @@ export const letterContent = {
     'And remember... This letter is only one small part of the surprise. The best part is still waiting for you.',
     'Happy Birthday once again. May all your dreams come true.',
   ],
-  signoff: ['With Love,', 'Deepak 😊'],
+  signoff: ['With Love,', 'Deepak ❤️'],
 };
