@@ -78,7 +78,6 @@ function computeItemBaseRotation(offsetX, offsetY, sizeX, sizeY, segments) {
   const rotateX = unit * (offsetY - (sizeY - 1) / 2);
   return { rotateX, rotateY };
 }
-
 export default function DomeGallery({
   images = DEFAULT_IMAGES,
   fit = 0.5,
@@ -268,8 +267,7 @@ export default function DomeGallery({
     },
     [dragDampening, maxVerticalRotationDeg, stopInertia]
   );
-
-  useGesture(
+        useGesture(
     {
       onDragStart: ({ event }) => {
         if (focusedElRef.current) return;
@@ -568,12 +566,13 @@ export default function DomeGallery({
       ref={rootRef}
       className="sphere-root"
       style={{
-        ['--segments-x']: segments,
-        ['--segments-y']: segments,
+        ['--segments-x']: String(segments), 
+        ['--segments-y']: String(segments), 
         ['--overlay-blur-color']: overlayBlurColor,
         ['--tile-radius']: imageBorderRadius,
         ['--enlarge-radius']: openedImageBorderRadius,
-        ['--image-filter']: grayscale ? 'grayscale(1)' : 'none'
+        ['--image-filter']: grayscale ? 'grayscale(1)' : 'none',
+        minHeight: '100dvh' 
       }}
     >
       <main ref={mainRef} className="sphere-main">
@@ -589,10 +588,10 @@ export default function DomeGallery({
                 data-size-x={it.sizeX}
                 data-size-y={it.sizeY}
                 style={{
-                  ['--offset-x']: it.x,
-                  ['--offset-y']: it.y,
-                  ['--item-size-x']: it.sizeX,
-                  ['--item-size-y']: it.sizeY
+                  ['--offset-x']: String(it.x),       
+                  ['--offset-y']: String(it.y),       
+                  ['--item-size-x']: String(it.sizeX), 
+                  ['--item-size-y']: String(it.sizeY)  
                 }}
               >
                 <div
@@ -609,6 +608,7 @@ export default function DomeGallery({
                     alt={it.alt}
                     onError={(e) => {
                       const target = e.currentTarget;
+                      console.error(`[DomeGallery] Failed to load image at: ${target.src}. Check Vite public path.`);
                       target.style.display = 'none';
                       target.parentElement.style.background = 'rgba(26, 24, 40, 0.5)';
                     }}
@@ -631,4 +631,5 @@ export default function DomeGallery({
       </main>
     </div>
   );
-}
+    }
+          
