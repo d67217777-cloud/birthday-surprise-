@@ -4,23 +4,23 @@ export const letterContent = {
   birthdayLine: 'Happy Birthday! 🎂✨',
 
   paragraphs: [
-    "Sabse pehle... Happy Birthday Kumkum! 🥳 Aaj ka din tumhare liye bahut special hai, isliye socha ki is baar sirf ek normal 'Happy Birthday' message na bheju, balki kuch aisa banaun jo tum hamesha yaad rakh sako.",
+    "Hi Kumkum! 😊 Sabse pehle tumhe dil se Happy Birthday! Aaj ka din tumhare liye bahut special hai, aur isi liye maine socha ki is baar sirf ek simple birthday message nahi, balki ek chhota sa surprise diya jaye.",
 
-    "Sach bolu to ye website banane me kaafi time aur mehnat lagi, lekin har baar bas ek hi thought tha — jab tum ise dekho, to tumhare face par ek genuine smile aa jaye. Bas wahi meri sabse badi reward hogi. 😊",
+    "Ye website maine dheere-dheere bahut pyaar se tayyar ki hai. Har section, har animation aur har memory ke piche sirf ek hi intention tha — tumhare birthday ko thoda aur special banana.",
 
-    "Tum un logon me se ho jo bina kisi extra effort ke bhi apni simplicity aur positive nature se sabka din thoda better bana dete hain. Shayad isi wajah se tumhari value aur bhi zyada lagti hai.",
+    "Life me bahut kam log hote hain jo apni simplicity aur nature se dusron ke face par smile le aate hain. Mujhe lagta hai tum unhi logon me se ek ho. Bas hamesha aise hi smile karti rehna. 😊",
 
-    "Life me bahut saare naye experiences aayenge, naye log milenge aur naye goals bhi. Meri bas itni si wish hai ki tum hamesha khush raho, apne dreams achieve karo aur kabhi apni smile mat khona.",
+    "Aane wala saal tumhare liye bahut saari khushiyan, naye experiences aur success lekar aaye. Jo bhi sapne tumne dekhe hain, wo dheere-dheere sab pure ho. Aur har naya din tumhare liye ek nayi achievement lekar aaye.",
 
-    "Har memory ki ek value hoti hai. Is website ka har section aur har photo sirf isi liye hai taki aaj ka din tumhare liye thoda aur memorable ban sake.",
+    "Is website ki har memory sirf photos ka collection nahi hai, balki ek chhoti si yaad hai jo shayad kabhi na kabhi tumhe phir se smile de de.",
 
-    "Aur haan... agar ye surprise dekhkar tumhare face par ek choti si smile aa gayi ho, to samajh lena ki meri saari mehnat successful ho gayi. 😄",
+    "Agar is surprise ko dekhkar tum ek baar bhi smile kar do, to meri mehnat successful ho jayegi. Bas itna hi chahta tha ki tumhara birthday thoda aur memorable ban jaye. ✨",
 
-    "Once again, Happy Birthday Kumkum! 🎉 Bhagwan tumhe hamesha healthy, happy aur successful rakhe. Stay the amazing person you already are. 🌸"
+    "Thank you itna time nikal kar is surprise ko dekhne ke liye. Once again... Happy Birthday Kumkum! 🎉 Bhagwan kare tumhari life hamesha happiness, peace aur success se bhari rahe."
   ],
 
   signOff: [
-    'Take Care 😊',
-    'Deepak'
+    'Take Care 🌸',
+    '— Deepak 😊'
   ],
 };
