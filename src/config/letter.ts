@@ -10,5 +10,5 @@ export const letterContent = {
   "Aur haan... agar is surprise ko dekhkar tum ek baar bhi smile kar do, to samajh lena ki meri saari mehnat successful ho gayi. 😊",
     "Once again... Happy Birthday Kumkum! 🎂🌸 Hamesha khush raho, healthy raho aur life me bahut aage badho. Stay exactly the way you are, because that's what makes you unique. ✨"
   ],
-  signoff: ['With Love,', 'Deepak ❤️'],
+  signoff: ['Warmest Wishes,', 'Deepak ❤️'],
 };
