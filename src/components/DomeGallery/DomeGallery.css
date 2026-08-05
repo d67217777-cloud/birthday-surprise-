@@ -67,12 +67,15 @@ main.sphere-main {
   backdrop-filter: blur(3px);
 }
 
-/* FIXED: Cleaned up the insane -999px margins and forced container to be 100% transparent */
+/* 3D Item Positioning Fixed & Fully Transparent */
 .item {
   width: calc(var(--item-width) * var(--item-size-x));
   height: calc(var(--item-height) * var(--item-size-y));
   position: absolute;
-  inset: 0;
+  top: -999px;
+  bottom: -999px;
+  left: -999px;
+  right: -999px;
   margin: auto;
   background: transparent !important;
   box-shadow: none !important;
@@ -84,7 +87,7 @@ main.sphere-main {
     translateZ(var(--radius));
 }
 
-/* FIXED: Set image to fit tightly with transparent background */
+/* Tight & Transparent Image Box */
 .item__image {
   position: absolute;
   display: block;
@@ -197,4 +200,4 @@ main.sphere-main {
 
 .edge-fade--bottom {
   bottom: 0;
-  }
+}
