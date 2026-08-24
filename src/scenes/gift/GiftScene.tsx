@@ -4,9 +4,9 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import type { SceneComponentProps } from '../../types';
 import { useSceneManagerContext } from '../../hooks';
 import { GoldButton } from '../../components';
-import { GiftBox, type GiftBoxPhase } from '../../components/GiftBox/GiftBox';
+import { GiftBox, type GiftBoxPhase } from './GiftBox';
 import { GiftBackground } from './GiftBackground';
-import { ButterflyField } from '../../components/ButterflyField/ButterflyField';
+import { ButterflyField } from './ButterflyField';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -36,14 +36,11 @@ export function GiftScene({ isActive: _isActive }: SceneComponentProps) {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 py-8 text-center">
-      {/* Dynamic Midnight & Firefly Background */}
       <GiftBackground />
 
-      {/* Magical Butterflies Flying upon Opening */}
       {isOpen && <ButterflyField count={16} />}
 
       <div className="relative z-10 flex w-full max-w-lg flex-col items-center gap-6">
-        {/* Top Header Tag */}
         <motion.div
           className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 bg-[#e9b13a]/10 border border-[#e9b13a]/25 text-[#f3d98e]"
           initial={{ opacity: 0, y: -10 }}
@@ -54,7 +51,6 @@ export function GiftScene({ isActive: _isActive }: SceneComponentProps) {
           <span className="text-xs sm:text-sm tracking-[0.25em] uppercase font-medium">A Gift For You</span>
         </motion.div>
 
-        {/* 3D Interactive Gift Box */}
         <motion.div
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -64,7 +60,6 @@ export function GiftScene({ isActive: _isActive }: SceneComponentProps) {
           <GiftBox phase={phase} onTap={handleOpen} />
         </motion.div>
 
-        {/* Action / Message Reveal */}
         <AnimatePresence mode="wait">
           {phase === 'idle' ? (
             <motion.p
@@ -109,7 +104,6 @@ export function GiftScene({ isActive: _isActive }: SceneComponentProps) {
         </AnimatePresence>
       </div>
 
-      {/* Scene Navigation Transition Curtain */}
       <AnimatePresence>
         {navigating && (
           <motion.div
