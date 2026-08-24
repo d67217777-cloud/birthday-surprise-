@@ -5,40 +5,55 @@ import type { SceneDefinition } from '../types';
 
 interface SceneNavigationProps {
   manager: SceneManager;
-  registry: Record<string, SceneDefinition>;
+  registry?: Record<string, SceneDefinition>;
 }
 
 export function SceneNavigation({ manager }: SceneNavigationProps) {
   return (
-    <div className="fixed bottom-4 left-1/2 z-30 -translate-x-1/2">
-      <div className="flex items-center gap-1.5 rounded-full glass px-3 py-2">
+    <div className="fixed bottom-3 left-1/2 z-20 -translate-x-1/2 pointer-events-none select-none flex flex-col items-center">
+      {/* Visual Progress Indicator */}
+      <div
+        className="flex items-center gap-1.5 rounded-full px-3 py-1.5 backdrop-blur-md"
+        style={{
+          background: 'rgba(15, 15, 22, 0.65)',
+          border: '1px solid rgba(233, 177, 58, 0.25)',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.4)',
+        }}
+      >
         {sceneFlow.map((id, i) => (
-          <button
+          <span
             key={id}
-            onClick={() => manager.goTo(id)}
-            aria-label={sceneLabels[id]}
-            className="group relative flex h-2 items-center"
+            className="flex h-2 items-center"
+            aria-label={sceneLabels[id] || id}
           >
             <motion.span
-              className="block rounded-full transition-all duration-500 ease-cinematic"
+              className="block rounded-full"
               animate={{
-                width: i === manager.index ? 24 : 8,
+                width: i === manager.index ? 20 : 6,
                 backgroundColor: i === manager.index ? '#e9b13a' : '#4a4a55',
+                boxShadow:
+                  i === manager.index
+                    ? '0 0 8px rgba(233, 177, 58, 0.8)'
+                    : 'none',
               }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              style={{ height: '5px' }}
             />
-          </button>
+          </span>
         ))}
       </div>
-      <AnimatePresence>
+
+      {/* Current Scene Name Label */}
+      <AnimatePresence mode="wait">
         <motion.p
           key={manager.current}
-          className="mt-2 text-center font-body text-[10px] tracking-[0.2em] text-void-300 uppercase"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          className="mt-1.5 text-center text-[10px] tracking-[0.22em] text-[#f3d98e]/70 uppercase font-medium"
+          initial={{ opacity: 0, y: 3 }}
+          animate={{ opacity: 0.85, y: 0 }}
+          exit={{ opacity: 0, y: -3 }}
+          transition={{ duration: 0.3 }}
         >
-          {sceneLabels[manager.current]}
+          {sceneLabels[manager.current] || manager.current}
         </motion.p>
       </AnimatePresence>
     </div>
