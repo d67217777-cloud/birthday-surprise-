@@ -28,7 +28,9 @@ const rampTo = (
 export function useBackgroundMusic() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [muted, setMuted] = useState(false);
-  const [started, setStarted] = useState(false);
+  
+  // useState ki jagah useRef use kiya taaki tap karne par component re-render na ho
+  const startedRef = useRef(false);
 
   useEffect(() => {
     const audio = new Audio(musicSrc);
@@ -37,41 +39,58 @@ export function useBackgroundMusic() {
     audio.preload = 'auto';
     audioRef.current = audio;
 
-    const startOnInteraction = () => {
-      if (started) return;
-      setStarted(true);
-      void (async () => {
-        try {
-          await audio.play();
-          await rampTo(audio, musicConfig.volume, musicConfig.fadeInMs);
-        } catch {
-          setStarted(false);
+    const startOnInteraction = async () => {
+      if (startedRef.current) return;
+      
+      try {
+        startedRef.current = true;
+        
+        // Safari & Chrome require play() to be caught properly
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          await playPromise;
         }
-      })();
+        
+        await rampTo(audio, musicConfig.volume, musicConfig.fadeInMs);
+      } catch (err) {
+        // Agar browser rokey, toh false set karein taaki agle tap par fir try ho sake
+        startedRef.current = false;
+        console.warn("Autoplay blocked waiting for user tap...", err);
+      }
     };
 
-    const events: (keyof WindowEventMap)[] = ['click', 'keydown', 'touchstart'];
+    const events = ['click', 'touchstart', 'keydown'] as const;
+    
+    // Window ki jagah document level par listeners lagaye hain mobile support ke liye
     events.forEach((e) =>
-      window.addEventListener(e, startOnInteraction, { once: true }),
+      document.addEventListener(e, startOnInteraction)
     );
 
     return () => {
       events.forEach((e) =>
-        window.removeEventListener(e, startOnInteraction),
+        document.removeEventListener(e, startOnInteraction)
       );
       audio.pause();
       audio.src = '';
       audioRef.current = null;
     };
-  }, [started]);
+  }, []); // <-- Khali Array! Ab yeh dobara run hoke music ko kill nahi karega.
 
   const toggleMute = useCallback(() => {
     setMuted((prev) => {
       const next = !prev;
       const audio = audioRef.current;
       if (audio) {
-        if (next) void rampTo(audio, 0, musicConfig.fadeOutMs);
-        else void rampTo(audio, musicConfig.volume, musicConfig.fadeInMs);
+        if (next) {
+          void rampTo(audio, 0, musicConfig.fadeOutMs);
+        } else {
+          // Agar user pehli baar bina kahin tap kiye seedha mute/unmute button dabaye
+          if (!startedRef.current) {
+            startedRef.current = true;
+            audio.play().catch(() => { startedRef.current = false; });
+          }
+          void rampTo(audio, musicConfig.volume, musicConfig.fadeInMs);
+        }
       }
       return next;
     });
