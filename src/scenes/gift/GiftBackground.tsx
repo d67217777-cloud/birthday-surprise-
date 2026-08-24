@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { randomBetween } from '../../lib/utils';
 
 interface Firefly {
+  id: number;
   left: number;
   top: number;
   size: number;
@@ -11,73 +13,63 @@ interface Firefly {
   yDrift: number;
 }
 
-interface FogBand {
-  top: number;
-  height: number;
-  delay: number;
-  duration: number;
-}
-
 export function GiftBackground() {
   const fireflies = useMemo<Firefly[]>(
     () =>
-      Array.from({ length: 18 }, () => ({
+      Array.from({ length: 22 }, (_, i) => ({
+        id: i,
         left: randomBetween(5, 95),
         top: randomBetween(10, 90),
         size: randomBetween(3, 6),
-        delay: randomBetween(0, 6),
-        duration: randomBetween(6, 12),
-        xDrift: randomBetween(-40, 40),
-        yDrift: randomBetween(-60, -20),
+        delay: randomBetween(0, 5),
+        duration: randomBetween(7, 14),
+        xDrift: randomBetween(-45, 45),
+        yDrift: randomBetween(-50, -20),
       })),
     [],
   );
 
-  const fogBands = useMemo<FogBand[]>(
-    () => [
-      { top: 60, height: 35, delay: 0, duration: 24 },
-      { top: 30, height: 28, delay: 8, duration: 30 },
-      { top: 75, height: 25, delay: 4, duration: 20 },
-    ],
-    [],
-  );
-
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-void-950 via-void-900 to-void-950" />
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ background: '#050508' }}>
+      {/* Deep Midnight Gradient Base */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#050508] via-[#0b0a12] to-[#050508]" />
+
+      {/* Warm Golden Spotlight Glow for Gift Box */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(233,177,58,0.14), transparent 70%)',
+          background:
+            'radial-gradient(ellipse 65% 55% at 50% 45%, rgba(233,177,58,0.12), transparent 70%)',
         }}
       />
-      <div className="absolute inset-0 bg-moonlight opacity-40" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 10%, rgba(254,240,138,0.06), transparent 50%)',
+        }}
+      />
 
-      {fogBands.map((f, i) => (
-        <div
-          key={`fog-${i}`}
-          className="absolute left-0 right-0 animate-fog-drift"
-          style={{
-            top: `${f.top}%`,
-            height: `${f.height}%`,
-            background: 'linear-gradient(to right, transparent, rgba(30,28,38,0.3), transparent)',
-            animationDelay: `${f.delay}s`,
-            animationDuration: `${f.duration}s`,
-          }}
-        />
-      ))}
-
-      {fireflies.map((f, i) => (
-        <div
-          key={`firefly-${i}`}
-          className="absolute animate-firefly-wander"
+      {/* Floating Glowing Fireflies */}
+      {fireflies.map((f) => (
+        <motion.div
+          key={f.id}
+          className="absolute"
           style={{
             left: `${f.left}%`,
             top: `${f.top}%`,
-            animationDelay: `${f.delay}s`,
-            animationDuration: `${f.duration}s`,
-            ['--x-drift' as string]: `${f.xDrift}px`,
-            ['--y-drift' as string]: `${f.yDrift}px`,
+          }}
+          animate={{
+            x: [0, f.xDrift, 0],
+            y: [0, f.yDrift, 0],
+            opacity: [0.2, 0.95, 0.2],
+            scale: [0.8, 1.25, 0.8],
+          }}
+          transition={{
+            duration: f.duration,
+            delay: f.delay,
+            repeat: Infinity,
+            ease: 'easeInOut',
           }}
         >
           <span
@@ -85,14 +77,19 @@ export function GiftBackground() {
             style={{
               width: `${f.size}px`,
               height: `${f.size}px`,
-              background: 'rgba(239,196,87,0.9)',
-              boxShadow: '0 0 8px rgba(239,196,87,0.7), 0 0 16px rgba(239,196,87,0.3)',
+              background: '#fef08a',
+              boxShadow:
+                '0 0 10px rgba(233,177,58,0.9), 0 0 20px rgba(233,177,58,0.4)',
             }}
           />
-        </div>
+        </motion.div>
       ))}
 
-      <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 200px 60px rgba(0,0,0,0.7)' }} />
+      {/* Outer Dark Vignette for Cinematic Focus */}
+      <div
+        className="absolute inset-0"
+        style={{ boxShadow: 'inset 0 0 180px 50px rgba(0,0,0,0.85)' }}
+      />
     </div>
   );
 }
