@@ -27,7 +27,7 @@ export function useDevModeProvider(): DevModeContext {
     tapTimerRef.current = setTimeout(() => {
       tapCountRef.current = 0;
     }, 800);
-    if (tapCountRef.current >= 7) {
+    if (tapCountRef.current >= 15) {
       tapCountRef.current = 0;
       setActive(true);
     }
