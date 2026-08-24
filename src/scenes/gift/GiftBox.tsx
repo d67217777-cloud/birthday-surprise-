@@ -8,17 +8,12 @@ interface GiftBoxProps {
   onTap: () => void;
 }
 
-const BOX_W = 140; // Box Width & Depth
-const BOX_H = 120; // Box Body Height
-const LID_W = 148; // Lid Width & Depth
-const LID_H = 30;  // Lid Skirt Height
-
 export function GiftBox({ phase, onTap }: GiftBoxProps) {
   const isOpen = phase === 'opening' || phase === 'open';
 
   return (
     <div
-      className="relative flex items-center justify-center py-16 select-none"
+      className="relative flex items-center justify-center py-14 select-none"
       style={{
         perspective: '1200px',
         perspectiveOrigin: '50% 25%',
@@ -28,8 +23,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
       <motion.div
         className="relative flex items-center justify-center cursor-pointer"
         style={{
-          width: BOX_W,
-          height: BOX_H,
+          width: 140,
+          height: 120,
           transformStyle: 'preserve-3d',
           transform: 'rotateX(-22deg) rotateY(38deg)',
         }}
@@ -58,15 +53,15 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         whileHover={phase === 'idle' ? { scale: 1.05 } : undefined}
         whileTap={phase === 'idle' ? { scale: 0.96 } : undefined}
       >
-        {/* Contact Shadow on Floor Plane */}
+        {/* Floor Shadow */}
         <div
           className="absolute pointer-events-none rounded-full"
           style={{
-            width: BOX_W * 1.6,
-            height: BOX_W * 1.6,
+            width: 220,
+            height: 220,
             background:
               'radial-gradient(ellipse, rgba(0,0,0,0.85) 0%, rgba(233,177,58,0.18) 40%, transparent 70%)',
-            transform: `translateY(${BOX_H / 2 + 10}px) rotateX(90deg)`,
+            transform: 'translateY(70px) rotateX(90deg)',
             filter: 'blur(10px)',
           }}
         />
@@ -78,10 +73,10 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           animate={{ opacity: isOpen ? 1 : 0 }}
           transition={{ duration: 0.5 }}
           style={{
-            width: BOX_W,
-            height: BOX_H * 2,
+            width: 140,
+            height: 240,
             transformStyle: 'preserve-3d',
-            transform: `translateY(-${BOX_H / 2}px)`,
+            transform: 'translateY(-60px)',
           }}
         >
           <motion.div
@@ -100,14 +95,14 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           />
         </motion.div>
 
-        {/* ---------------- 3D LID (Top & 4 Skirt Faces) ---------------- */}
+        {/* ---------------- 3D LID ---------------- */}
         <motion.div
           className="absolute"
           style={{
-            width: LID_W,
-            height: LID_H,
-            top: -(LID_H - 8),
-            left: -(LID_W - BOX_W) / 2,
+            width: 148,
+            height: 30,
+            top: -22,
+            left: -4,
             transformStyle: 'preserve-3d',
           }}
           animate={
@@ -127,19 +122,19 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex items-center justify-center overflow-hidden"
             style={{
-              width: LID_W,
-              height: LID_W,
+              width: 148,
+              height: 148,
               background: 'linear-gradient(135deg, #1f1f2b 0%, #111118 100%)',
               border: '1.5px solid rgba(233,177,58,0.5)',
               boxShadow: 'inset 0 0 15px rgba(233,177,58,0.2)',
-              transform: `rotateX(90deg) translateZ(${LID_H / 2}px)`,
+              transform: 'rotateX(90deg) translateZ(15px)',
             }}
           >
             {/* Cross Gold Ribbon */}
             <div className="absolute h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.6)]" />
             <div className="absolute w-full h-6 bg-gradient-to-b from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.6)]" />
 
-            {/* 3D Realistic Gold Bow Knot */}
+            {/* Ribbon Bow */}
             <div className="relative z-10 flex items-center justify-center">
               <div
                 className="h-6 w-10 rounded-full -rotate-30 -mr-2"
@@ -171,11 +166,11 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: LID_W,
-              height: LID_H,
+              width: 148,
+              height: 30,
               background: 'linear-gradient(180deg, #1c1c27, #0d0d13)',
               border: '1px solid rgba(233,177,58,0.4)',
-              transform: `translateZ(${LID_W / 2}px)`,
+              transform: 'translateZ(74px)',
             }}
           >
             <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e]" />
@@ -185,11 +180,11 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: LID_W,
-              height: LID_H,
+              width: 148,
+              height: 30,
               background: 'linear-gradient(180deg, #14141d, #09090e)',
               border: '1px solid rgba(233,177,58,0.3)',
-              transform: `rotateY(90deg) translateZ(${LID_W / 2}px)`,
+              transform: 'rotateY(90deg) translateZ(74px)',
             }}
           >
             <div className="h-full w-6 bg-gradient-to-r from-[#78350f] via-[#d97706] to-[#78350f]" />
@@ -199,11 +194,11 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: LID_W,
-              height: LID_H,
+              width: 148,
+              height: 30,
               background: 'linear-gradient(180deg, #242433, #12121a)',
               border: '1px solid rgba(233,177,58,0.4)',
-              transform: `rotateY(-90deg) translateZ(${LID_W / 2}px)`,
+              transform: 'rotateY(-90deg) translateZ(74px)',
             }}
           >
             <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e]" />
@@ -213,10 +208,10 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: LID_W,
-              height: LID_H,
+              width: 148,
+              height: 30,
               background: '#09090d',
-              transform: `rotateY(180deg) translateZ(${LID_W / 2}px)`,
+              transform: 'rotateY(180deg) translateZ(74px)',
             }}
           >
             <div className="h-full w-6 bg-[#92400e]" />
@@ -229,41 +224,41 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute flex justify-center overflow-hidden rounded-sm"
           style={{
-            width: BOX_W,
-            height: BOX_H,
+            width: 140,
+            height: 120,
             background: 'linear-gradient(180deg, #171722 0%, #0c0c12 100%)',
             border: '1px solid rgba(233,177,58,0.35)',
             boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8)',
-            transform: `translateZ(${BOX_W / 2}px)`,
+            transform: 'translateZ(70px)',
           }}
         >
           <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.3)]" />
         </div>
 
-        {/* Right Face (Shadow Side) */}
+        {/* Right Face */}
         <div
           className="absolute flex justify-center overflow-hidden rounded-sm"
           style={{
-            width: BOX_W,
-            height: BOX_H,
+            width: 140,
+            height: 120,
             background: 'linear-gradient(180deg, #101018 0%, #07070b 100%)',
             border: '1px solid rgba(233,177,58,0.25)',
             boxShadow: 'inset 0 0 25px rgba(0,0,0,0.9)',
-            transform: `rotateY(90deg) translateZ(${BOX_W / 2}px)`,
+            transform: 'rotateY(90deg) translateZ(70px)',
           }}
         >
           <div className="h-full w-6 bg-gradient-to-r from-[#78350f] via-[#d97706] to-[#78350f]" />
         </div>
 
-        {/* Left Face (Highlight Side) */}
+        {/* Left Face */}
         <div
           className="absolute flex justify-center overflow-hidden rounded-sm"
           style={{
-            width: BOX_W,
-            height: BOX_H,
+            width: 140,
+            height: 120,
             background: 'linear-gradient(180deg, #20202e 0%, #101017 100%)',
             border: '1px solid rgba(233,177,58,0.4)',
-            transform: `rotateY(-90deg) translateZ(${BOX_W / 2}px)`,
+            transform: 'rotateY(-90deg) translateZ(70px)',
           }}
         >
           <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e]" />
@@ -273,10 +268,10 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute flex justify-center overflow-hidden"
           style={{
-            width: BOX_W,
-            height: BOX_H,
+            width: 140,
+            height: 120,
             background: '#09090d',
-            transform: `rotateY(180deg) translateZ(${BOX_W / 2}px)`,
+            transform: 'rotateY(180deg) translateZ(70px)',
           }}
         >
           <div className="h-full w-6 bg-[#78350f]" />
@@ -286,15 +281,15 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute"
           style={{
-            width: BOX_W,
-            height: BOX_W,
+            width: 140,
+            height: 140,
             background: '#050508',
-            transform: `rotateX(-90deg) translateZ(${BOX_H / 2}px)`,
+            transform: 'rotateX(-90deg) translateZ(60px)',
           }}
         />
       </motion.div>
 
-      {/* Floating 3D Sparkle Burst when Opened */}
+      {/* Bursting Stars */}
       <AnimatePresence>
         {isOpen && (
           <div className="absolute inset-0 pointer-events-none z-40 flex items-center justify-center">
