@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Star } from 'lucide-react';
 
 export type GiftBoxPhase = 'idle' | 'shaking' | 'untying' | 'opening' | 'open';
 
@@ -11,131 +12,181 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
   const isOpen = phase === 'opening' || phase === 'open';
 
   return (
-    <div className="relative flex flex-col items-center" style={{ perspective: '800px' }}>
+    <div className="relative flex flex-col items-center justify-center select-none py-10" style={{ perspective: '1000px' }}>
+      {/* Background Soft Glow Aura */}
       <motion.div
-        className="absolute bottom-2 h-24 w-40 rounded-full"
+        className="absolute h-48 w-48 rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(239,196,87,0.25), transparent 70%)',
-          filter: 'blur(20px)',
+          background: 'radial-gradient(circle, rgba(233, 177, 58, 0.28), transparent 70%)',
+          filter: 'blur(30px)',
         }}
-        animate={{ opacity: phase === 'open' ? [0.6, 1, 0.6] : 0.6 }}
+        animate={{
+          scale: isOpen ? [1, 1.4, 1.2] : [0.9, 1.1, 0.9],
+          opacity: isOpen ? 0.9 : 0.45,
+        }}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <motion.div
-        className="relative z-20"
-        animate={
-          phase === 'shaking'
-            ? { rotate: [0, -4, 4, -3, 3, 0], x: [0, -3, 3, -2, 2, 0] }
-            : isOpen
-              ? { y: -70, rotateX: -45, opacity: 0.9 }
-              : { rotate: 0, x: 0, y: 0 }
-        }
-        transition={
-          phase === 'shaking'
-            ? { duration: 0.6, ease: 'easeInOut' }
-            : { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
-        }
-        style={{ transformOrigin: 'center bottom', marginBottom: '-6px' }}
-      >
-        <BoxLid />
-      </motion.div>
+      {/* Bursting Magical Stars when Opened */}
+      <AnimatePresence>
+        {isOpen && (
+          <div className="absolute inset-0 pointer-events-none z-30 flex items-center justify-center">
+            {[-45, -20, 0, 20, 45].map((angle, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0.5, 1.2, 0.8],
+                  x: Math.sin((angle * Math.PI) / 180) * 110,
+                  y: -Math.cos((angle * Math.PI) / 180) * 110 - 20,
+                }}
+                transition={{
+                  duration: 1.4,
+                  delay: i * 0.08,
+                  repeat: Infinity,
+                  repeatDelay: 0.6,
+                }}
+                className="absolute text-[#fde047]"
+              >
+                {i % 2 === 0 ? <Sparkles size={20} /> : <Star size={16} className="fill-[#e9b13a]" />}
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </AnimatePresence>
 
-      <motion.div
-        className="relative z-10 cursor-pointer"
-        onClick={onTap}
-        animate={phase === 'shaking' ? { rotate: [0, 2, -2, 1, -1, 0] } : { rotate: 0 }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
-        whileHover={phase === 'idle' ? { scale: 1.04 } : undefined}
-        whileTap={phase === 'idle' ? { scale: 0.97 } : undefined}
-      >
-        <BoxBase />
-
+      {/* Gift Box Container */}
+      <div className="relative z-10 cursor-pointer flex flex-col items-center" onClick={onTap}>
+        {/* Animated Box Lid */}
         <motion.div
-          className="absolute inset-0 flex items-start justify-center overflow-hidden rounded-b-lg"
-          animate={{ opacity: isOpen ? 1 : 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          className="relative z-20 flex flex-col items-center"
+          animate={
+            phase === 'shaking'
+              ? { rotate: [0, -6, 6, -4, 4, 0], x: [0, -4, 4, -3, 3, 0] }
+              : isOpen
+                ? { y: -85, rotateX: -30, rotateZ: 10, opacity: 0.85, scale: 1.05 }
+                : { rotate: 0, x: 0, y: 0, opacity: 1 }
+          }
+          transition={
+            phase === 'shaking'
+              ? { duration: 0.5, ease: 'easeInOut' }
+              : { duration: 1, ease: [0.16, 1, 0.3, 1] }
+          }
+          style={{ transformOrigin: 'center bottom', marginBottom: '-4px' }}
         >
-          <motion.div
-            className="mt-2 h-20 w-24 rounded-full"
+          {/* Ribbon Bow */}
+          <div className="relative flex items-center justify-center -mb-2 z-10">
+            {/* Left Loop */}
+            <div
+              className="h-6 w-9 rounded-full -rotate-25"
+              style={{
+                background: 'linear-gradient(135deg, #fef08a, #e9b13a, #92400e)',
+                boxShadow: '0 0 10px rgba(233,177,58,0.5)',
+                border: '1px solid rgba(254,240,138,0.6)',
+              }}
+            />
+            {/* Center Knot */}
+            <div
+              className="h-5 w-5 rounded-full z-10 -mx-1"
+              style={{
+                background: 'radial-gradient(circle at 30% 30%, #fef08a, #d97706)',
+                boxShadow: '0 0 8px rgba(233,177,58,0.7)',
+              }}
+            />
+            {/* Right Loop */}
+            <div
+              className="h-6 w-9 rounded-full rotate-25"
+              style={{
+                background: 'linear-gradient(225deg, #fef08a, #e9b13a, #92400e)',
+                boxShadow: '0 0 10px rgba(233,177,58,0.5)',
+                border: '1px solid rgba(254,240,138,0.6)',
+              }}
+            />
+          </div>
+
+          {/* Lid Cap */}
+          <div
+            className="relative h-9 w-44 rounded-lg overflow-hidden flex items-center justify-center"
             style={{
-              background: 'radial-gradient(circle, rgba(255,230,150,0.9), rgba(239,196,87,0.3) 60%, transparent 80%)',
-              filter: 'blur(8px)',
+              background: 'linear-gradient(180deg, #22222f 0%, #12121a 100%)',
+              border: '1px solid rgba(233, 177, 58, 0.4)',
+              boxShadow: '0 6px 20px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.15)',
             }}
-            animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          />
+          >
+            {/* Vertical Ribbon */}
+            <div
+              className="h-full w-7"
+              style={{
+                background: 'linear-gradient(90deg, #b45309, #fde047 50%, #b45309)',
+                boxShadow: '0 0 10px rgba(233,177,58,0.3)',
+              }}
+            />
+          </div>
         </motion.div>
-      </motion.div>
-    </div>
-  );
-}
 
-function BoxLid() {
-  return (
-    <div className="relative">
-      <svg width="160" height="54" viewBox="0 0 160 54" fill="none">
-        <defs>
-          <linearGradient id="lidBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#8b1a2e" />
-            <stop offset="50%" stopColor="#6b0f20" />
-            <stop offset="100%" stopColor="#4a0a17" />
-          </linearGradient>
-          <linearGradient id="lidShine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="40%" stopColor="rgba(255,255,255,0.12)" />
-            <stop offset="60%" stopColor="rgba(255,255,255,0)" />
-          </linearGradient>
-          <linearGradient id="ribbonGold" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#f5d98e" />
-            <stop offset="50%" stopColor="#e9b13a" />
-            <stop offset="100%" stopColor="#b8761f" />
-          </linearGradient>
-        </defs>
-        <rect x="4" y="10" width="152" height="40" rx="4" fill="url(#lidBody)" />
-        <rect x="4" y="10" width="152" height="40" rx="4" fill="url(#lidShine)" />
-        <rect x="4" y="10" width="152" height="3" rx="2" fill="rgba(255,200,150,0.2)" />
-        <rect x="70" y="10" width="20" height="40" fill="url(#ribbonGold)" />
-        <rect x="72" y="10" width="3" height="40" fill="rgba(255,240,200,0.4)" />
-        <ellipse cx="80" cy="8" rx="14" ry="9" fill="url(#ribbonGold)" />
-        <ellipse cx="80" cy="8" rx="14" ry="3" fill="rgba(180,100,30,0.3)" />
-        <path d="M66 8 Q50 0 56 14 Q62 18 66 8 Z" fill="url(#ribbonGold)" />
-        <path d="M94 8 Q110 0 104 14 Q98 18 94 8 Z" fill="url(#ribbonGold)" />
-        <ellipse cx="80" cy="6" rx="10" ry="2" fill="rgba(255,240,200,0.35)" />
-      </svg>
-    </div>
-  );
-}
+        {/* Box Base Body */}
+        <motion.div
+          className="relative z-10 flex items-center justify-center overflow-hidden rounded-xl"
+          animate={phase === 'shaking' ? { rotate: [0, 3, -3, 2, -2, 0] } : { rotate: 0 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          whileHover={phase === 'idle' ? { scale: 1.03 } : undefined}
+          whileTap={phase === 'idle' ? { scale: 0.97 } : undefined}
+          style={{
+            height: '135px',
+            width: '160px',
+            background: 'linear-gradient(180deg, #181822 0%, #0c0c12 100%)',
+            border: '1px solid rgba(233, 177, 58, 0.35)',
+            boxShadow: '0 15px 35px rgba(0,0,0,0.8), 0 0 25px rgba(233,177,58,0.12)',
+          }}
+        >
+          {/* Vertical Ribbon */}
+          <div
+            className="h-full w-7"
+            style={{
+              background: 'linear-gradient(90deg, #92400e, #fde047 50%, #92400e)',
+            }}
+          />
 
-function BoxBase() {
-  return (
-    <div className="relative">
-      <svg width="160" height="130" viewBox="0 0 160 130" fill="none">
-        <defs>
-          <linearGradient id="baseBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#7a1424" />
-            <stop offset="50%" stopColor="#5a0d1a" />
-            <stop offset="100%" stopColor="#3d0812" />
-          </linearGradient>
-          <linearGradient id="baseShine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="40%" stopColor="rgba(255,255,255,0.08)" />
-            <stop offset="60%" stopColor="rgba(255,255,255,0)" />
-          </linearGradient>
-          <linearGradient id="ribbonGoldBase" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#f5d98e" />
-            <stop offset="50%" stopColor="#e9b13a" />
-            <stop offset="100%" stopColor="#b8761f" />
-          </linearGradient>
-        </defs>
-        <rect x="8" y="0" width="144" height="125" rx="5" fill="url(#baseBody)" />
-        <rect x="8" y="0" width="144" height="125" rx="5" fill="url(#baseShine)" />
-        <rect x="8" y="0" width="144" height="3" rx="2" fill="rgba(255,200,150,0.15)" />
-        <rect x="70" y="0" width="20" height="125" fill="url(#ribbonGoldBase)" />
-        <rect x="72" y="0" width="3" height="125" fill="rgba(255,240,200,0.35)" />
-        <rect x="8" y="0" width="4" height="125" fill="rgba(0,0,0,0.2)" />
-        <rect x="148" y="0" width="4" height="125" fill="rgba(0,0,0,0.2)" />
-      </svg>
+          {/* Horizontal Ribbon */}
+          <div
+            className="absolute left-0 right-0 h-7"
+            style={{
+              background: 'linear-gradient(180deg, #92400e, #fde047 50%, #92400e)',
+            }}
+          />
+
+          {/* Internal Glowing Surprise Beam when opened */}
+          <motion.div
+            className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden rounded-xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isOpen ? 1 : 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              className="h-28 w-28 rounded-full"
+              style={{
+                background: 'radial-gradient(circle, #fde047, #e9b13a 50%, transparent 80%)',
+                filter: 'blur(10px)',
+              }}
+              animate={{
+                scale: [1, 1.35, 1],
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Floor Shadow */}
+      <div
+        className="mt-2 h-4 w-40 rounded-full"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(0,0,0,0.8), transparent 70%)',
+          filter: 'blur(4px)',
+        }}
+      />
     </div>
   );
-}
+            }
