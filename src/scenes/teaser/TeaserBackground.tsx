@@ -1,22 +1,20 @@
 import { useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { randomBetween } from '../../lib/utils';
 
 interface Firefly {
+  id: number;
   left: number;
   top: number;
   size: number;
   delay: number;
   duration: number;
-}
-
-interface FogBand {
-  top: number;
-  height: number;
-  delay: number;
-  duration: number;
+  driftX: number;
+  driftY: number;
 }
 
 interface Sparkle {
+  id: number;
   left: number;
   top: number;
   size: number;
@@ -27,65 +25,73 @@ interface Sparkle {
 export function TeaserBackground() {
   const fireflies = useMemo<Firefly[]>(
     () =>
-      Array.from({ length: 16 }, () => ({
+      Array.from({ length: 18 }, (_, i) => ({
+        id: i,
         left: randomBetween(5, 95),
         top: randomBetween(10, 90),
-        size: randomBetween(3, 5),
-        delay: randomBetween(0, 6),
-        duration: randomBetween(7, 14),
+        size: randomBetween(3, 5.5),
+        delay: randomBetween(0, 5),
+        duration: randomBetween(7, 13),
+        driftX: randomBetween(-35, 35),
+        driftY: randomBetween(-40, -15),
       })),
-    [],
-  );
-
-  const fogBands = useMemo<FogBand[]>(
-    () => [
-      { top: 55, height: 30, delay: 0, duration: 26 },
-      { top: 25, height: 25, delay: 6, duration: 32 },
-    ],
     [],
   );
 
   const sparkles = useMemo<Sparkle[]>(
     () =>
-      Array.from({ length: 25 }, () => ({
-        left: randomBetween(0, 100),
-        top: randomBetween(0, 100),
-        size: randomBetween(1, 2.5),
-        delay: randomBetween(0, 5),
-        duration: randomBetween(3, 6),
+      Array.from({ length: 28 }, (_, i) => ({
+        id: i,
+        left: randomBetween(2, 98),
+        top: randomBetween(2, 98),
+        size: randomBetween(1.5, 3),
+        delay: randomBetween(0, 4),
+        duration: randomBetween(2.5, 5),
       })),
     [],
   );
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-void-950/70 via-void-900/70 to-void-950/70" />
-      <div className="absolute inset-0 bg-moonlight opacity-50" />
-      <div className="absolute inset-0 bg-radial-spotlight" />
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ background: '#050508' }}>
+      {/* Deep Midnight Base Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#050508] via-[#090910] to-[#050508]" />
 
-      {fogBands.map((f, i) => (
-        <div
-          key={`fog-${i}`}
-          className="absolute left-0 right-0 animate-fog-drift"
-          style={{
-            top: `${f.top}%`,
-            height: `${f.height}%`,
-            background: 'linear-gradient(to right, transparent, rgba(30,28,38,0.28), transparent)',
-            animationDelay: `${f.delay}s`,
-            animationDuration: `${f.duration}s`,
-          }}
-        />
-      ))}
+      {/* Warm Ambient Spotlight for Center Teaser Text */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 45%, rgba(233,177,58,0.11), transparent 65%)',
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 40% at 50% 15%, rgba(254,240,138,0.05), transparent 60%)',
+        }}
+      />
 
-      {fireflies.map((f, i) => (
-        <div
-          key={`firefly-${i}`}
-          className="absolute animate-firefly-wander"
+      {/* Floating Glowing Fireflies */}
+      {fireflies.map((f) => (
+        <motion.div
+          key={f.id}
+          className="absolute"
           style={{
             left: `${f.left}%`,
             top: `${f.top}%`,
-            animationDelay: `${f.delay}s`,
-            animationDuration: `${f.duration}s`,
+          }}
+          animate={{
+            x: [0, f.driftX, 0],
+            y: [0, f.driftY, 0],
+            opacity: [0.15, 0.9, 0.15],
+            scale: [0.8, 1.2, 0.8],
+          }}
+          transition={{
+            duration: f.duration,
+            delay: f.delay,
+            repeat: Infinity,
+            ease: 'easeInOut',
           }}
         >
           <span
@@ -93,29 +99,45 @@ export function TeaserBackground() {
             style={{
               width: `${f.size}px`,
               height: `${f.size}px`,
-              background: 'rgba(239,196,87,0.9)',
-              boxShadow: '0 0 8px rgba(239,196,87,0.7), 0 0 16px rgba(239,196,87,0.3)',
+              background: '#fef08a',
+              boxShadow:
+                '0 0 10px rgba(233,177,58,0.85), 0 0 18px rgba(233,177,58,0.35)',
             }}
           />
-        </div>
+        </motion.div>
       ))}
 
-      {sparkles.map((s, i) => (
-        <span
-          key={`sparkle-${i}`}
-          className="absolute rounded-full bg-gold-100 animate-twinkle"
+      {/* Twinkling Star Dust */}
+      {sparkles.map((s) => (
+        <motion.span
+          key={s.id}
+          className="absolute rounded-full"
           style={{
             left: `${s.left}%`,
             top: `${s.top}%`,
             width: `${s.size}px`,
             height: `${s.size}px`,
-            animationDelay: `${s.delay}s`,
-            animationDuration: `${s.duration}s`,
+            background: '#ffffff',
+            boxShadow: '0 0 6px rgba(255,255,255,0.7)',
+          }}
+          animate={{
+            opacity: [0.1, 0.85, 0.1],
+            scale: [0.7, 1.3, 0.7],
+          }}
+          transition={{
+            duration: s.duration,
+            delay: s.delay,
+            repeat: Infinity,
+            ease: 'easeInOut',
           }}
         />
       ))}
 
-      <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 200px 60px rgba(0,0,0,0.7)' }} />
+      {/* Edge Vignette */}
+      <div
+        className="absolute inset-0"
+        style={{ boxShadow: 'inset 0 0 180px 55px rgba(0,0,0,0.85)' }}
+      />
     </div>
   );
 }
