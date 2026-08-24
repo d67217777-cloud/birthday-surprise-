@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import type { SceneComponentProps } from '../../types';
 import { useSceneManagerContext } from '../../hooks';
 import { ParticleField } from '../../components';
@@ -8,8 +8,8 @@ import { getMemoryImages } from '../../config/images';
 import Waves from '../../components/effects/Waves/Waves';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const TRANSITION_DURATION = 0.6;
-const FINAL_DELAY = 2000;
+const TRANSITION_DURATION = 0.55;
+const FINAL_DELAY = 2200;
 
 export function MemoryJourneyScene({ isActive }: SceneComponentProps) {
   const manager = useSceneManagerContext();
@@ -96,28 +96,35 @@ export function MemoryJourneyScene({ isActive }: SceneComponentProps) {
   const current = images[currentIndex];
 
   const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 40 : -40, opacity: 0, scale: 1.04 }),
+    enter: (dir: number) => ({ x: dir > 0 ? 50 : -50, opacity: 0, scale: 0.96 }),
     center: { x: 0, opacity: 1, scale: 1 },
-    exit: (dir: number) => ({ x: dir > 0 ? -40 : 40, opacity: 0, scale: 1.04 }),
+    exit: (dir: number) => ({ x: dir > 0 ? -50 : 50, opacity: 0, scale: 0.96 }),
   };
 
   return (
     <div
-      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 py-8 vignette"
+      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 py-8"
       style={{
+        background: '#060609',
         paddingTop: 'max(4rem, env(safe-area-inset-top))',
         paddingBottom: 'max(5rem, env(safe-area-inset-bottom))',
       }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-void-950 via-void-900 to-void-950" />
-      <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(233,177,58,0.05), transparent 60%)' }} />
+      {/* Background Gradients */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse at 50% 35%, rgba(233,177,58,0.08), transparent 65%)',
+        }}
+      />
 
-      {/* React Bits Waves — animated background layer */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      {/* Waves Layer */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-60">
         <Waves
-          lineColor="rgba(255,255,255,0.08)"
+          lineColor="rgba(233,177,58,0.12)"
           backgroundColor="transparent"
           waveSpeedX={0.008}
           waveSpeedY={0.004}
@@ -131,22 +138,29 @@ export function MemoryJourneyScene({ isActive }: SceneComponentProps) {
         />
       </div>
 
-      {/* Soft overlay for readability */}
-      <div className="pointer-events-none absolute inset-0 z-10 bg-black/35" />
+      <div className="pointer-events-none absolute inset-0 z-10 bg-black/40" />
+      <ParticleField count={30} />
 
-      <ParticleField count={35} />
-
+      {/* Header Badge */}
       <motion.div
-        className="relative z-20 mb-6 text-center"
+        className="relative z-20 mb-4 flex items-center gap-2 rounded-full px-4 py-1.5"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: navigating ? 0 : 1, y: 0 }}
         transition={{ duration: 0.8, ease: EASE }}
+        style={{
+          background: 'rgba(233,177,58,0.08)',
+          border: '1px solid rgba(233,177,58,0.25)',
+        }}
       >
-        <p className="font-body text-xs sm:text-sm tracking-[0.3em] text-gold-300/70 uppercase">Memory Journey</p>
+        <Sparkles size={14} className="text-[#e9b13a]" />
+        <span className="text-xs sm:text-sm tracking-[0.25em] text-[#f3d98e] uppercase font-medium">
+          Memory Journey &bull; {currentIndex + 1}/{images.length}
+        </span>
       </motion.div>
 
-      <div className="relative z-20 flex w-full max-w-3xl flex-1 flex-col items-center justify-center">
-        <div className="relative w-full" style={{ minHeight: 'clamp(360px, 55vh, 560px)' }}>
+      {/* Main Slide Carousel */}
+      <div className="relative z-20 flex w-full max-w-2xl flex-1 flex-col items-center justify-center">
+        <div className="relative w-full flex items-center justify-center" style={{ minHeight: 'clamp(380px, 58vh, 560px)' }}>
           <AnimatePresence custom={direction} mode="wait">
             <motion.div
               key={currentIndex}
@@ -156,107 +170,131 @@ export function MemoryJourneyScene({ isActive }: SceneComponentProps) {
               animate="center"
               exit="exit"
               transition={{ duration: TRANSITION_DURATION, ease: EASE }}
-              className="absolute inset-0 flex flex-col items-center"
+              className="flex flex-col items-center justify-center w-full"
             >
+              {/* Image Frame */}
               <div
-                className="relative flex items-center justify-center overflow-hidden rounded-2xl"
+                className="relative overflow-hidden rounded-2xl p-1.5 backdrop-blur-md"
                 style={{
-                  boxShadow: '0 0 40px rgba(233,177,58,0.2), 0 16px 50px rgba(0,0,0,0.6)',
-                  border: '1px solid rgba(233,177,58,0.25)',
+                  background: 'linear-gradient(145deg, rgba(233,177,58,0.3), rgba(20,20,28,0.8))',
+                  border: '1px solid rgba(233,177,58,0.4)',
+                  boxShadow: '0 0 45px rgba(233,177,58,0.18), 0 20px 50px rgba(0,0,0,0.8)',
                 }}
               >
-                <motion.img
+                <img
                   src={current.src}
-                  alt={current.alt}
-                  className="h-auto w-auto max-w-full object-contain max-h-[65vh] sm:max-h-[70vh]"
-                  style={{ display: 'block' }}
+                  alt={current.alt || `Memory ${currentIndex + 1}`}
+                  className="h-auto w-auto max-w-full rounded-xl object-contain max-h-[55vh] sm:max-h-[62vh]"
                   draggable={false}
-                  animate={{ scale: [1, 1.04, 1] }}
-                  transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
               </div>
 
+              {/* Caption */}
               <motion.p
-                className="mt-6 max-w-lg px-4 text-center font-display text-lg sm:text-2xl italic text-void-100"
+                className="mt-5 max-w-lg px-4 text-center text-lg sm:text-2xl italic text-[#f4f4f8]"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+                transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
+                style={{
+                  fontFamily: '"Cormorant Garamond", Georgia, serif',
+                  textShadow: '0 2px 10px rgba(0,0,0,0.8)',
+                }}
               >
-                {current.caption}
+                "{current.caption}"
               </motion.p>
             </motion.div>
           </AnimatePresence>
         </div>
 
+        {/* Navigation Controls */}
         {!showFinal && (
           <div className="mt-6 flex items-center gap-6">
             <button
               onClick={() => paginate(-1)}
               disabled={currentIndex === 0}
               aria-label="Previous memory"
-              className="flex h-10 w-10 items-center justify-center rounded-full glass text-void-100 transition-all hover:scale-110 hover:text-gold-200 disabled:opacity-30 disabled:pointer-events-none"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-[#e9b13a] transition-all hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none cursor-pointer"
+              style={{
+                background: 'rgba(20, 20, 28, 0.8)',
+                border: '1px solid rgba(233,177,58,0.35)',
+              }}
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={22} />
             </button>
-            <div className="flex items-center gap-1.5">
+
+            {/* Indicator Dots */}
+            <div className="flex items-center gap-2">
               {images.map((img, i) => (
-                <button key={img.id} onClick={() => goToSlide(i)} aria-label={`Go to memory ${i + 1}`} className="group relative">
-                  <span className={`block rounded-full transition-all duration-500 ease-cinematic ${i === currentIndex ? 'h-2 w-6 bg-gold-300' : 'h-2 w-2 bg-void-500 group-hover:bg-void-300'}`} />
+                <button
+                  key={img.id || i}
+                  onClick={() => goToSlide(i)}
+                  aria-label={`Go to memory ${i + 1}`}
+                  className="cursor-pointer p-1"
+                >
+                  <span
+                    className={`block rounded-full transition-all duration-300 ${
+                      i === currentIndex
+                        ? 'h-2.5 w-7 bg-[#e9b13a] shadow-[0_0_12px_#e9b13a]'
+                        : 'h-2 w-2 bg-white/25 hover:bg-white/50'
+                    }`}
+                  />
                 </button>
               ))}
             </div>
+
             <button
               onClick={() => paginate(1)}
               disabled={currentIndex === images.length - 1}
               aria-label="Next memory"
-              className="flex h-10 w-10 items-center justify-center rounded-full glass text-void-100 transition-all hover:scale-110 hover:text-gold-200 disabled:opacity-30 disabled:pointer-events-none"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-[#e9b13a] transition-all hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none cursor-pointer"
+              style={{
+                background: 'rgba(20, 20, 28, 0.8)',
+                border: '1px solid rgba(233,177,58,0.35)',
+              }}
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={22} />
             </button>
           </div>
         )}
       </div>
 
+      {/* Transitioning to Next Scene Overlay */}
       <AnimatePresence>
         {showFinal && (
           <motion.div
-            className="absolute inset-0 z-30 flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: navigating ? 0 : 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1, ease: EASE }}
-          >
-            <div className="absolute inset-0 bg-void-950/80 backdrop-blur-sm" />
-            <motion.div
-              className="relative z-20 text-center px-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: EASE }}
-            >
-              <h2 className="font-display text-display-md sm:text-display-lg italic text-gradient-gold">
-                Our journey doesn't end here...
-              </h2>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {navigating && (
-          <motion.div
-            className="absolute inset-0 z-50"
+            className="absolute inset-0 z-30 flex items-center justify-center px-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, ease: 'easeInOut' }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.9, ease: EASE }}
           >
-            <div className="absolute inset-0 bg-void-950" />
-            <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(233,177,58,0.06), transparent 60%)' }} />
+            <div className="absolute inset-0 bg-[#060609]/85 backdrop-blur-md" />
+            <motion.div
+              className="relative z-20 text-center max-w-md"
+              initial={{ opacity: 0, scale: 0.92, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1, ease: EASE }}
+            >
+              <h2
+                className="text-3xl sm:text-4xl italic font-semibold text-[#e9b13a]"
+                style={{
+                  fontFamily: '"Cormorant Garamond", Georgia, serif',
+                  textShadow: '0 0 25px rgba(233,177,58,0.4)',
+                }}
+              >
+                Our journey doesn't end here...
+              </h2>
+              <p className="mt-3 text-sm text-[#f3d98e]/80 tracking-widest uppercase">
+                Opening special letter ✨
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
   );
-}
+                            }
+              
