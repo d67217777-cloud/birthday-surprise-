@@ -6,4 +6,5 @@ export const musicConfig = {
   loop: true,
 };
 
-export const musicSrc = `/music/${musicConfig.fileName}`;
+// Yahan shuru mein ek dot (.) lagaya hai taaki relative path ban jaye
+export const musicSrc = `./music/${musicConfig.fileName}`; 
