@@ -23,9 +23,9 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
       <motion.div
         className="relative flex items-center justify-center cursor-pointer"
         style={{
-          width: 140,
-          height: 120,
-          transformStyle: 'preserve-3d',
+          width: '140px',
+          height: '120px',
+          transformStyle: 'preserve-3d' as const,
           transform: 'rotateX(-22deg) rotateY(38deg)',
         }}
         onClick={onTap}
@@ -57,8 +57,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute pointer-events-none rounded-full"
           style={{
-            width: 220,
-            height: 220,
+            width: '220px',
+            height: '220px',
             background:
               'radial-gradient(ellipse, rgba(0,0,0,0.85) 0%, rgba(233,177,58,0.18) 40%, transparent 70%)',
             transform: 'translateY(70px) rotateX(90deg)',
@@ -73,9 +73,9 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           animate={{ opacity: isOpen ? 1 : 0 }}
           transition={{ duration: 0.5 }}
           style={{
-            width: 140,
-            height: 240,
-            transformStyle: 'preserve-3d',
+            width: '140px',
+            height: '240px',
+            transformStyle: 'preserve-3d' as const,
             transform: 'translateY(-60px)',
           }}
         >
@@ -95,15 +95,15 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           />
         </motion.div>
 
-        {/* ---------------- 3D LID ---------------- */}
+        {/* 3D LID */}
         <motion.div
           className="absolute"
           style={{
-            width: 148,
-            height: 30,
-            top: -22,
-            left: -4,
-            transformStyle: 'preserve-3d',
+            width: '148px',
+            height: '30px',
+            top: '-22px',
+            left: '-4px',
+            transformStyle: 'preserve-3d' as const,
           }}
           animate={
             isOpen
@@ -122,19 +122,17 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex items-center justify-center overflow-hidden"
             style={{
-              width: 148,
-              height: 148,
+              width: '148px',
+              height: '148px',
               background: 'linear-gradient(135deg, #1f1f2b 0%, #111118 100%)',
               border: '1.5px solid rgba(233,177,58,0.5)',
               boxShadow: 'inset 0 0 15px rgba(233,177,58,0.2)',
               transform: 'rotateX(90deg) translateZ(15px)',
             }}
           >
-            {/* Cross Gold Ribbon */}
             <div className="absolute h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.6)]" />
             <div className="absolute w-full h-6 bg-gradient-to-b from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.6)]" />
 
-            {/* Ribbon Bow */}
             <div className="relative z-10 flex items-center justify-center">
               <div
                 className="h-6 w-10 rounded-full -rotate-30 -mr-2"
@@ -166,8 +164,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: 148,
-              height: 30,
+              width: '148px',
+              height: '30px',
               background: 'linear-gradient(180deg, #1c1c27, #0d0d13)',
               border: '1px solid rgba(233,177,58,0.4)',
               transform: 'translateZ(74px)',
@@ -180,8 +178,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: 148,
-              height: 30,
+              width: '148px',
+              height: '30px',
               background: 'linear-gradient(180deg, #14141d, #09090e)',
               border: '1px solid rgba(233,177,58,0.3)',
               transform: 'rotateY(90deg) translateZ(74px)',
@@ -194,8 +192,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: 148,
-              height: 30,
+              width: '148px',
+              height: '30px',
               background: 'linear-gradient(180deg, #242433, #12121a)',
               border: '1px solid rgba(233,177,58,0.4)',
               transform: 'rotateY(-90deg) translateZ(74px)',
@@ -208,8 +206,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           <div
             className="absolute flex justify-center overflow-hidden"
             style={{
-              width: 148,
-              height: 30,
+              width: '148px',
+              height: '30px',
               background: '#09090d',
               transform: 'rotateY(180deg) translateZ(74px)',
             }}
@@ -218,14 +216,14 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           </div>
         </motion.div>
 
-        {/* ---------------- 3D BOX BODY FACES ---------------- */}
+        {/* 3D BOX BODY FACES */}
 
         {/* Front Face */}
         <div
           className="absolute flex justify-center overflow-hidden rounded-sm"
           style={{
-            width: 140,
-            height: 120,
+            width: '140px',
+            height: '120px',
             background: 'linear-gradient(180deg, #171722 0%, #0c0c12 100%)',
             border: '1px solid rgba(233,177,58,0.35)',
             boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8)',
@@ -239,8 +237,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute flex justify-center overflow-hidden rounded-sm"
           style={{
-            width: 140,
-            height: 120,
+            width: '140px',
+            height: '120px',
             background: 'linear-gradient(180deg, #101018 0%, #07070b 100%)',
             border: '1px solid rgba(233,177,58,0.25)',
             boxShadow: 'inset 0 0 25px rgba(0,0,0,0.9)',
@@ -254,8 +252,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute flex justify-center overflow-hidden rounded-sm"
           style={{
-            width: 140,
-            height: 120,
+            width: '140px',
+            height: '120px',
             background: 'linear-gradient(180deg, #20202e 0%, #101017 100%)',
             border: '1px solid rgba(233,177,58,0.4)',
             transform: 'rotateY(-90deg) translateZ(70px)',
@@ -268,8 +266,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute flex justify-center overflow-hidden"
           style={{
-            width: 140,
-            height: 120,
+            width: '140px',
+            height: '120px',
             background: '#09090d',
             transform: 'rotateY(180deg) translateZ(70px)',
           }}
@@ -281,8 +279,8 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         <div
           className="absolute"
           style={{
-            width: 140,
-            height: 140,
+            width: '140px',
+            height: '140px',
             background: '#050508',
             transform: 'rotateX(-90deg) translateZ(60px)',
           }}
