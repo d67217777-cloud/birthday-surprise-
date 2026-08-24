@@ -53,25 +53,25 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
         whileHover={phase === 'idle' ? { scale: 1.05 } : undefined}
         whileTap={phase === 'idle' ? { scale: 0.96 } : undefined}
       >
-        {/* Floor Shadow */}
+        {/* Floor Cinematic Shadow */}
         <div
           className="absolute pointer-events-none rounded-full"
           style={{
-            width: '220px',
-            height: '220px',
+            width: '240px',
+            height: '240px',
             background:
-              'radial-gradient(ellipse, rgba(0,0,0,0.85) 0%, rgba(233,177,58,0.18) 40%, transparent 70%)',
+              'radial-gradient(ellipse, rgba(0,0,0,0.95) 0%, rgba(233,177,58,0.25) 40%, transparent 70%)',
             transform: 'translateY(70px) rotateX(90deg)',
-            filter: 'blur(10px)',
+            filter: 'blur(12px)',
           }}
         />
 
-        {/* Inner Glowing Light Beam when Open */}
+        {/* Inner Glowing Light Beam when Open (Magical Gold Aura) */}
         <motion.div
           className="absolute pointer-events-none flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: isOpen ? 1 : 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           style={{
             width: '140px',
             height: '240px',
@@ -80,18 +80,19 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           }}
         >
           <motion.div
-            className="w-24 rounded-full"
+            className="w-28 rounded-full"
             style={{
-              height: '220px',
+              height: '240px',
               background:
-                'linear-gradient(180deg, rgba(254,240,138,0.95), rgba(233,177,58,0.4) 60%, transparent)',
-              filter: 'blur(12px)',
+                'linear-gradient(180deg, rgba(254,240,138,0.95), rgba(233,177,58,0.6) 40%, transparent)',
+              filter: 'blur(15px)',
+              boxShadow: '0 0 60px rgba(254,240,138,0.6)',
             }}
             animate={{
-              scale: [0.9, 1.25, 0.9],
-              opacity: [0.7, 1, 0.7],
+              scale: [0.9, 1.2, 0.9],
+              opacity: [0.6, 1, 0.6],
             }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
 
@@ -108,129 +109,102 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           animate={
             isOpen
               ? {
-                  y: -130,
-                  rotateX: 35,
-                  rotateZ: -20,
-                  rotateY: 15,
-                  opacity: 0.9,
+                  y: -140,
+                  rotateX: 45,
+                  rotateZ: -25,
+                  rotateY: 20,
+                  opacity: 0, // Fades out slightly as it flies away
                 }
               : { y: 0, rotateX: 0, rotateZ: 0, rotateY: 0, opacity: 1 }
           }
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Lid Top Face */}
+          {/* Lid Top Face - Velvet with Gold Reflection */}
           <div
             className="absolute flex items-center justify-center overflow-hidden"
             style={{
               width: '148px',
               height: '148px',
-              background: 'linear-gradient(135deg, #1f1f2b 0%, #111118 100%)',
-              border: '1.5px solid rgba(233,177,58,0.5)',
-              boxShadow: 'inset 0 0 15px rgba(233,177,58,0.2)',
+              background: 'linear-gradient(135deg, #15151e 0%, #0a0a0f 100%)',
+              border: '1.5px solid rgba(233,177,58,0.6)',
+              boxShadow: 'inset 0 0 25px rgba(233,177,58,0.15)',
               transform: 'rotateX(90deg) translateZ(15px)',
             }}
           >
-            <div className="absolute h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.6)]" />
-            <div className="absolute w-full h-6 bg-gradient-to-b from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.6)]" />
+            {/* Silk Gold Ribbons */}
+            <div className="absolute h-full w-7 bg-gradient-to-r from-[#78350f] via-[#fef08a] to-[#78350f] shadow-[0_0_12px_rgba(233,177,58,0.5)]" />
+            <div className="absolute w-full h-7 bg-gradient-to-b from-[#78350f] via-[#fef08a] to-[#78350f] shadow-[0_0_12px_rgba(233,177,58,0.5)]" />
 
+            {/* Premium Center Bow */}
             <div className="relative z-10 flex items-center justify-center">
               <div
-                className="h-6 w-10 rounded-full -rotate-30 -mr-2"
+                className="h-7 w-12 rounded-full -rotate-30 -mr-3"
                 style={{
-                  background: 'linear-gradient(135deg, #fef08a, #e9b13a 60%, #92400e)',
-                  boxShadow: '0 0 8px rgba(233,177,58,0.6)',
-                  border: '1px solid rgba(254,240,138,0.8)',
+                  background: 'linear-gradient(135deg, #fef08a, #d97706 60%, #78350f)',
+                  boxShadow: '0 0 10px rgba(233,177,58,0.7)',
+                  border: '1px solid rgba(254,240,138,0.9)',
                 }}
               />
               <div
-                className="h-5 w-5 rounded-full z-20"
+                className="h-6 w-6 rounded-full z-20"
                 style={{
-                  background: 'radial-gradient(circle at 35% 35%, #fef08a, #d97706 70%, #78350f)',
-                  boxShadow: '0 0 8px rgba(233,177,58,0.8)',
+                  background: 'radial-gradient(circle at 35% 35%, #fffbeb, #e9b13a 60%, #78350f)',
+                  boxShadow: '0 0 12px rgba(254,240,138,0.9)',
+                  border: '1px solid rgba(255,255,255,0.5)',
                 }}
               />
               <div
-                className="h-6 w-10 rounded-full rotate-30 -ml-2"
+                className="h-7 w-12 rounded-full rotate-30 -ml-3"
                 style={{
-                  background: 'linear-gradient(225deg, #fef08a, #e9b13a 60%, #92400e)',
-                  boxShadow: '0 0 8px rgba(233,177,58,0.6)',
-                  border: '1px solid rgba(254,240,138,0.8)',
+                  background: 'linear-gradient(225deg, #fef08a, #d97706 60%, #78350f)',
+                  boxShadow: '0 0 10px rgba(233,177,58,0.7)',
+                  border: '1px solid rgba(254,240,138,0.9)',
                 }}
               />
             </div>
           </div>
 
-          {/* Lid Front Face */}
+          {/* Lid Edges (Front, Right, Left, Back) */}
           <div
             className="absolute flex justify-center overflow-hidden"
-            style={{
-              width: '148px',
-              height: '30px',
-              background: 'linear-gradient(180deg, #1c1c27, #0d0d13)',
-              border: '1px solid rgba(233,177,58,0.4)',
-              transform: 'translateZ(74px)',
-            }}
+            style={{ width: '148px', height: '30px', background: 'linear-gradient(180deg, #181822, #0c0c11)', border: '1px solid rgba(233,177,58,0.5)', transform: 'translateZ(74px)' }}
           >
-            <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e]" />
+            <div className="h-full w-7 bg-gradient-to-r from-[#78350f] via-[#fef08a] to-[#78350f]" />
           </div>
-
-          {/* Lid Right Face */}
           <div
             className="absolute flex justify-center overflow-hidden"
-            style={{
-              width: '148px',
-              height: '30px',
-              background: 'linear-gradient(180deg, #14141d, #09090e)',
-              border: '1px solid rgba(233,177,58,0.3)',
-              transform: 'rotateY(90deg) translateZ(74px)',
-            }}
+            style={{ width: '148px', height: '30px', background: 'linear-gradient(180deg, #12121a, #08080c)', border: '1px solid rgba(233,177,58,0.4)', transform: 'rotateY(90deg) translateZ(74px)' }}
           >
-            <div className="h-full w-6 bg-gradient-to-r from-[#78350f] via-[#d97706] to-[#78350f]" />
+            <div className="h-full w-7 bg-gradient-to-r from-[#451a03] via-[#d97706] to-[#451a03]" />
           </div>
-
-          {/* Lid Left Face */}
           <div
             className="absolute flex justify-center overflow-hidden"
-            style={{
-              width: '148px',
-              height: '30px',
-              background: 'linear-gradient(180deg, #242433, #12121a)',
-              border: '1px solid rgba(233,177,58,0.4)',
-              transform: 'rotateY(-90deg) translateZ(74px)',
-            }}
+            style={{ width: '148px', height: '30px', background: 'linear-gradient(180deg, #1c1c28, #0f0f15)', border: '1px solid rgba(233,177,58,0.5)', transform: 'rotateY(-90deg) translateZ(74px)' }}
           >
-            <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e]" />
+            <div className="h-full w-7 bg-gradient-to-r from-[#78350f] via-[#fef08a] to-[#78350f]" />
           </div>
-
-          {/* Lid Back Face */}
           <div
             className="absolute flex justify-center overflow-hidden"
-            style={{
-              width: '148px',
-              height: '30px',
-              background: '#09090d',
-              transform: 'rotateY(180deg) translateZ(74px)',
-            }}
+            style={{ width: '148px', height: '30px', background: '#050508', transform: 'rotateY(180deg) translateZ(74px)' }}
           >
-            <div className="h-full w-6 bg-[#92400e]" />
+            <div className="h-full w-7 bg-[#78350f]" />
           </div>
         </motion.div>
 
-        {/* 3D BOX BODY FACES */}
-
+        {/* 3D BOX BODY FACES (Velvet Matte Black with Edge Glow) */}
         {/* Front Face */}
         <div
           className="absolute flex justify-center overflow-hidden rounded-sm"
           style={{
             width: '140px',
             height: '120px',
-            background: 'linear-gradient(180deg, #171722 0%, #0c0c12 100%)',
-            border: '1px solid rgba(233,177,58,0.35)',
-            boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8)',
+            background: 'linear-gradient(180deg, #15151e 0%, #0a0a0f 100%)',
+            border: '1px solid rgba(233,177,58,0.4)',
+            boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9), inset 0 0 10px rgba(233,177,58,0.1)',
             transform: 'translateZ(70px)',
           }}
         >
-          <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e] shadow-[0_0_8px_rgba(233,177,58,0.3)]" />
+          <div className="h-full w-7 bg-gradient-to-r from-[#78350f] via-[#fef08a] to-[#78350f] shadow-[0_0_10px_rgba(233,177,58,0.4)]" />
         </div>
 
         {/* Right Face */}
@@ -239,13 +213,13 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           style={{
             width: '140px',
             height: '120px',
-            background: 'linear-gradient(180deg, #101018 0%, #07070b 100%)',
-            border: '1px solid rgba(233,177,58,0.25)',
-            boxShadow: 'inset 0 0 25px rgba(0,0,0,0.9)',
+            background: 'linear-gradient(180deg, #0d0d14 0%, #050508 100%)',
+            border: '1px solid rgba(233,177,58,0.3)',
+            boxShadow: 'inset 0 0 40px rgba(0,0,0,0.95)',
             transform: 'rotateY(90deg) translateZ(70px)',
           }}
         >
-          <div className="h-full w-6 bg-gradient-to-r from-[#78350f] via-[#d97706] to-[#78350f]" />
+          <div className="h-full w-7 bg-gradient-to-r from-[#451a03] via-[#d97706] to-[#451a03]" />
         </div>
 
         {/* Left Face */}
@@ -254,62 +228,56 @@ export function GiftBox({ phase, onTap }: GiftBoxProps) {
           style={{
             width: '140px',
             height: '120px',
-            background: 'linear-gradient(180deg, #20202e 0%, #101017 100%)',
-            border: '1px solid rgba(233,177,58,0.4)',
+            background: 'linear-gradient(180deg, #1a1a24 0%, #0e0e14 100%)',
+            border: '1px solid rgba(233,177,58,0.45)',
+            boxShadow: 'inset 0 0 30px rgba(0,0,0,0.85)',
             transform: 'rotateY(-90deg) translateZ(70px)',
           }}
         >
-          <div className="h-full w-6 bg-gradient-to-r from-[#92400e] via-[#fde047] to-[#92400e]" />
+          <div className="h-full w-7 bg-gradient-to-r from-[#78350f] via-[#fef08a] to-[#78350f]" />
         </div>
 
         {/* Back Face */}
         <div
           className="absolute flex justify-center overflow-hidden"
-          style={{
-            width: '140px',
-            height: '120px',
-            background: '#09090d',
-            transform: 'rotateY(180deg) translateZ(70px)',
-          }}
+          style={{ width: '140px', height: '120px', background: '#050508', transform: 'rotateY(180deg) translateZ(70px)' }}
         >
-          <div className="h-full w-6 bg-[#78350f]" />
+          <div className="h-full w-7 bg-[#451a03]" />
         </div>
 
         {/* Bottom Face */}
         <div
           className="absolute"
-          style={{
-            width: '140px',
-            height: '140px',
-            background: '#050508',
-            transform: 'rotateX(-90deg) translateZ(60px)',
-          }}
+          style={{ width: '140px', height: '140px', background: '#020203', transform: 'rotateX(-90deg) translateZ(60px)' }}
         />
       </motion.div>
 
-      {/* Bursting Stars */}
+      {/* Bursting Magical Stars */}
       <AnimatePresence>
         {isOpen && (
           <div className="absolute inset-0 pointer-events-none z-40 flex items-center justify-center">
-            {[-60, -35, -15, 15, 35, 60].map((angle, i) => (
+            {[-65, -40, -15, 15, 40, 65].map((angle, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
                 animate={{
-                  opacity: [0, 1, 0],
-                  scale: [0.5, 1.3, 0.8],
-                  x: Math.sin((angle * Math.PI) / 180) * 130,
-                  y: -Math.cos((angle * Math.PI) / 180) * 120 - 40,
+                  opacity: [0, 1, 0.8, 0],
+                  scale: [0.5, 1.5, 1, 0.5],
+                  x: Math.sin((angle * Math.PI) / 180) * 150,
+                  y: -Math.cos((angle * Math.PI) / 180) * 140 - 50,
+                  rotate: [0, 180],
                 }}
                 transition={{
-                  duration: 1.5,
-                  delay: i * 0.09,
+                  duration: 2,
+                  delay: i * 0.1,
                   repeat: Infinity,
-                  repeatDelay: 0.5,
+                  repeatDelay: 0.3,
+                  ease: 'easeOut',
                 }}
                 className="absolute text-[#fde047]"
+                style={{ filter: 'drop-shadow(0 0 10px rgba(254,240,138,0.8))' }}
               >
-                {i % 2 === 0 ? <Sparkles size={22} /> : <Star size={18} className="fill-[#e9b13a]" />}
+                {i % 2 === 0 ? <Sparkles size={26} /> : <Star size={20} className="fill-[#e9b13a]" />}
               </motion.div>
             ))}
           </div>
