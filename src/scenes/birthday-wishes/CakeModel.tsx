@@ -254,6 +254,7 @@ function CakeText() {
       >
         Happy Birthday Kumkum
       </Text>
+      {/* "Made with Love" hata kar "Just For You" kar diya hai */}
       <Text
         position={[0, 0, 0.12]}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -266,7 +267,7 @@ function CakeText() {
         outlineWidth={0.002}
         outlineColor="#916018"
       >
-        Made with Love
+        Just For You
       </Text>
     </group>
   );
