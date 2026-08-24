@@ -119,7 +119,7 @@ export function BirthdayWishesScene({ isActive: _isActive }: SceneComponentProps
                   color: '#e9b13a',
                 }}
               >
-                With Love, Deepak ❤️
+                Warm Regards, Deepak ✨
               </p>
             </motion.div>
           </motion.div>
